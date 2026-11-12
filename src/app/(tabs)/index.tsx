@@ -1,7 +1,11 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../lib/auth';
 
 export default function HomeScreen() {
+  const { session } = useAuth();
+
   return (
     <View style={styles.container}>
       <Text style={{...styles.title, textAlign: 'center', marginBottom: 20, paddingHorizontal: 20}}>
@@ -15,6 +19,11 @@ export default function HomeScreen() {
 
       <Pressable style={styles.button} onPress={() => router.push('/capture')}>
         <Text style={styles.buttonText}>Take Photos</Text>
+      </Pressable>
+
+      <Text style={styles.signedIn}>Signed in as {session?.user.email}</Text>
+      <Pressable onPress={() => supabase.auth.signOut()}>
+        <Text style={styles.link}>Sign out</Text>
       </Pressable>
     </View>
   );
@@ -42,5 +51,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: '600',
+  },
+  signedIn: {
+    marginTop: 32,
+    color: '#888',
+    fontSize: 14,
+  },
+  link: {
+    marginTop: 8,
+    color: '#208AEF',
+    fontSize: 16,
   },
 });

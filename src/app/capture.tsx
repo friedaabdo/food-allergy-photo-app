@@ -54,7 +54,10 @@ export default function CaptureScreen() {
   async function uploadPhotos(list: Photo[]) {
     setUploading(true);
     try {
-      const folder = Date.now().toString();
+      // Each user gets their own folder, with one subfolder per set of photos
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('You need to be signed in to upload.');
+      const folder = `${user.id}/${Date.now()}`;
 
       for (const photo of list) {
         const ext = photo.uri.split('.').pop()?.toLowerCase() || 'jpg';
