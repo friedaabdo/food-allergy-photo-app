@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../lib/auth';
 import { CoinBalance, COINS_PER_SET } from '../../components/coin-balance';
+import {t} from '../../i18n';
 
 // The four photos the capture screen asks for, in order
 const SIDES = ['Front', 'Back', 'Side 1', 'Side 2'];
@@ -19,7 +20,7 @@ export default function HomeScreen() {
     >
       {/* Same header layout as My Items: heading on the left, coins on the right */}
       <View style={styles.headerRow}>
-        <Text style={styles.heading}>Home</Text>
+        <Text style={styles.heading}>{t('home.title')}</Text>
         <CoinBalance />
       </View>
 
