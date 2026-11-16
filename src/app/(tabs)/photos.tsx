@@ -118,7 +118,7 @@ export default function PhotosScreen() {
         ListHeaderComponent={
           <View style={styles.headerRow}>
             <Text style={styles.heading}>My Items</Text>
-            <CoinBalance setCount={sets.length} />
+            <CoinBalance />
           </View>
         }
         ListEmptyComponent={
