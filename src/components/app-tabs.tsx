@@ -20,6 +20,11 @@ export default function AppTabs() {
         />
       </NativeTabs.Trigger>
 
+      <NativeTabs.Trigger name="photos">
+        <NativeTabs.Trigger.Label>My Items</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="photo.on.rectangle" md="photo_library" renderingMode="template" />
+      </NativeTabs.Trigger>
+
       <NativeTabs.Trigger name="explore">
         <NativeTabs.Trigger.Label>Explore</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon

@@ -1,65 +1,97 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native';
 import { router } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../lib/auth';
+import { CoinBalance, COINS_PER_SET } from '../../components/coin-balance';
+
+// The four photos the capture screen asks for, in order
+const SIDES = ['Front', 'Back', 'Side 1', 'Side 2'];
 
 export default function HomeScreen() {
   const { session } = useAuth();
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
-      <Text style={{...styles.title, textAlign: 'center', marginBottom: 20, paddingHorizontal: 20}}>
-        Welcome to the Food Photo App
-      </Text>
-      <Text style={{ marginBottom: 20, textAlign: 'center',paddingHorizontal: 20}}>
-        This app allows you to take photos of your food packaging and upload them to a Supabase storage bucket. 
-        You can capture multiple angles of your food and store them securely in the cloud.
-      </Text>
-   
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingTop: insets.top + 16, paddingBottom: insets.bottom + 100, paddingHorizontal: 16 }}
+    >
+      {/* Same header layout as My Items: heading on the left, coins on the right */}
+      <View style={styles.headerRow}>
+        <Text style={styles.heading}>Home</Text>
+        <CoinBalance />
+      </View>
 
-      <Pressable style={styles.button} onPress={() => router.push('/capture')}>
-        <Text style={styles.buttonText}>Take Photos</Text>
+      <Text style={styles.title}>Scan a food package</Text>
+      <Text style={styles.body}>
+        Take four photos of the package so its label and ingredients are saved to your items.
+        Each package earns {COINS_PER_SET} coins.
+      </Text>
+
+      {/* A picture of the four photos you'll take */}
+      <View style={styles.sideGrid}>
+        {SIDES.map((side, i) => (
+          <View key={side} style={styles.sideTile}>
+            <Text style={styles.sideNumber}>{i + 1}</Text>
+            <Text style={styles.sideLabel}>{side}</Text>
+          </View>
+        ))}
+      </View>
+
+      <Pressable
+        style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+        onPress={() => router.push('/capture')}
+      >
+        <Text style={styles.buttonText}>Take photos</Text>
       </Pressable>
 
-      <Text style={styles.signedIn}>Signed in as {session?.user.email}</Text>
-      <Pressable onPress={() => supabase.auth.signOut()}>
-        <Text style={styles.link}>Sign out</Text>
+      <Pressable style={styles.secondaryButton} onPress={() => router.push('/photos')}>
+        <Text style={styles.secondaryText}>See my items</Text>
       </Pressable>
-    </View>
+
+      <View style={styles.account}>
+        <Text style={styles.signedIn}>Signed in as {session?.user.email}</Text>
+        <Pressable onPress={() => supabase.auth.signOut()} hitSlop={10}>
+          <Text style={styles.link}>Sign out</Text>
+        </Pressable>
+      </View>
+    </ScrollView>
   );
 }
 
+const BLUE = '#208AEF';
+const INK = '#1C2430';
+const MUTED = '#6B7480';
+const TINT = '#EEF5FD';
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+  container: { flex: 1, backgroundColor: '#fff' },
+  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 },
+  heading: { fontSize: 28, fontWeight: 'bold', color: INK },
+  title: { fontSize: 22, fontWeight: '700', color: INK, marginBottom: 8 },
+  body: { fontSize: 16, lineHeight: 23, color: MUTED, marginBottom: 24 },
+  sideGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginBottom: 28 },
+  sideTile: {
+    width: '47%',
+    flexGrow: 1,
+    aspectRatio: 1.4,
+    borderRadius: 14,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: '#B9D7F7',
+    backgroundColor: TINT,
+    padding: 12,
+    justifyContent: 'space-between',
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#208AEF',
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  signedIn: {
-    marginTop: 32,
-    color: '#888',
-    fontSize: 14,
-  },
-  link: {
-    marginTop: 8,
-    color: '#208AEF',
-    fontSize: 16,
-  },
+  sideNumber: { fontSize: 15, fontWeight: '700', color: BLUE },
+  sideLabel: { fontSize: 17, fontWeight: '600', color: INK },
+  button: { backgroundColor: BLUE, paddingVertical: 16, borderRadius: 12, alignItems: 'center' },
+  buttonPressed: { opacity: 0.85 },
+  buttonText: { color: '#fff', fontSize: 18, fontWeight: '600' },
+  secondaryButton: { paddingVertical: 14, alignItems: 'center', marginTop: 8 },
+  secondaryText: { color: BLUE, fontSize: 17, fontWeight: '600' },
+  account: { marginTop: 40, paddingTop: 20, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D5D9DE', alignItems: 'center', gap: 8 },
+  signedIn: { color: MUTED, fontSize: 14 },
+  link: { color: BLUE, fontSize: 16 },
 });
