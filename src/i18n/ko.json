@@ -53,8 +53,8 @@
     "claimedBody": "잔액에서 %{goal}코인이 차감되었습니다."
   },
   "capture": {
-    "before": "포장의 이 면을 촬영하세요",
-    "after": "",
+    "before": "포장의",
+    "after": "을 촬영하세요",
     "sidesTitle": "옆면도 촬영할까요?",
     "sidesQuestion": "옆면에 성분, 알레르기 유발 물질 또는 기타 중요한 정보가 있나요?",
     "skip": "건너뛰기",
