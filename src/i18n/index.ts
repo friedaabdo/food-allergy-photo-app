@@ -12,7 +12,7 @@ const i18n = new I18n({ en, ja, ko, th, 'zh-Hans': zhHans });
 
 // Works out which dictionary to use from the phone's language
 function pickLanguage() {
-  const locale = 'getLocales()[0]';
+  const locale = getLocales()[0];
   if (!locale) return 'en';
 
   // Chinese comes in two writing systems. We only have Simplified so far,
@@ -27,7 +27,7 @@ function pickLanguage() {
 }
 
 i18n.locale = pickLanguage();
-i18n.locale = 'ja';
+// i18n.locale = 'ja'; // For testing, force Chinese. Remove this line to use the phone's language
 
 // If a word is missing in that language, show English instead
 i18n.enableFallback = true;

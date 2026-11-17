@@ -4,16 +4,21 @@ import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '../../lib/supabase';
+import { t } from '../../i18n';
 import {
   CoinBalance, useCoinBalance, COINS_PER_SET, COIN_GOAL, GIFT_CARD_AMOUNT,
 } from '../../components/coin-balance';
 
 const ITEMS_FOR_GOAL = Math.ceil(COIN_GOAL / COINS_PER_SET); // 50 items
 
+// Values that fill the %{...} placeholders in the rewards text
+const VALUES = { coins: COINS_PER_SET, goal: COIN_GOAL, items: ITEMS_FOR_GOAL, amount: GIFT_CARD_AMOUNT };
+
+// Keys for the "How it works" steps; translated when the screen is drawn
 const STEPS = [
-  { title: 'Photograph a food package', text: 'Take the front, back and both sides so the label is saved.' },
-  { title: `Earn ${COINS_PER_SET} coins`, text: `Every item you photograph adds ${COINS_PER_SET} coins to your total.` },
-  { title: `Reach ${COIN_GOAL} coins`, text: `That's ${ITEMS_FOR_GOAL} items. Then you can claim a ${GIFT_CARD_AMOUNT} gift card.` },
+  { title: 'rewards.step1Title', text: 'rewards.step1Text' },
+  { title: 'rewards.step2Title', text: 'rewards.step2Text' },
+  { title: 'rewards.step3Title', text: 'rewards.step3Text' },
 ];
 
 export default function RewardsScreen() {
@@ -28,21 +33,21 @@ export default function RewardsScreen() {
   // so coins can't go below zero even if the button is tapped twice.
   const claim = () => {
     Alert.alert(
-      `Claim a ${GIFT_CARD_AMOUNT} gift card?`,
-      `${COIN_GOAL} coins will be taken from your balance.`,
+      t('rewards.confirmTitle', VALUES),
+      t('rewards.confirmBody', VALUES),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         {
-          text: 'Claim',
+          text: t('rewards.confirmButton'),
           onPress: async () => {
             setClaiming(true);
             const { error } = await supabase.rpc('claim_reward');
             await refresh();
             setClaiming(false);
             if (error) {
-              Alert.alert('Gift card not claimed', error.message);
+              Alert.alert(t('rewards.failedTitle'), error.message);
             } else {
-              Alert.alert('Gift card claimed', `${COIN_GOAL} coins were taken from your balance.`);
+              Alert.alert(t('rewards.claimedTitle'), t('rewards.claimedBody', VALUES));
             }
           },
         },
@@ -57,25 +62,25 @@ export default function RewardsScreen() {
     >
       {/* Same header layout as My Items and Home */}
       <View style={styles.headerRow}>
-        <Text style={styles.heading}>My Rewards</Text>
+        <Text style={styles.heading}>{t('rewards.title')}</Text>
         <CoinBalance coins={coins} />
       </View>
 
       {/* Progress toward the gift card */}
       <View style={styles.goal}>
-        <Text style={styles.goalTitle}>{GIFT_CARD_AMOUNT} gift card</Text>
+        <Text style={styles.goalTitle}>{t('rewards.giftCard', VALUES)}</Text>
         <View style={styles.goalNumbers}>
           <Image source={require('@/assets/images/coin.png')} style={styles.goalCoin} contentFit="contain" />
           <Text style={styles.goalCoins}>{coins}</Text>
-          <Text style={styles.goalOf}> / {COIN_GOAL} coins</Text>
+          <Text style={styles.goalOf}> {t('rewards.coinsOf', VALUES)}</Text>
         </View>
         <View style={styles.track}>
           <View style={[styles.fill, { width: `${progress * 100}%` }]} />
         </View>
         <Text style={styles.goalHint}>
           {reached
-            ? `You have enough coins for a ${GIFT_CARD_AMOUNT} gift card.`
-            : `${itemsLeft} more ${itemsLeft === 1 ? 'item' : 'items'} to go.`}
+            ? t('rewards.enough', VALUES)
+            : t('rewards.itemsLeft', { count: itemsLeft })}
         </Text>
 
         <Pressable
@@ -87,28 +92,28 @@ export default function RewardsScreen() {
             <ActivityIndicator color="#fff" />
           ) : (
             <Text style={[styles.buttonText, !reached && styles.buttonTextDisabled]}>
-              {reached ? `Claim ${GIFT_CARD_AMOUNT} gift card` : `Claim at ${COIN_GOAL} coins`}
+              {reached ? t('rewards.claim', VALUES) : t('rewards.claimAt', VALUES)}
             </Text>
           )}
         </Pressable>
       </View>
 
       {/* How it works: a real 1-2-3 sequence */}
-      <Text style={styles.sectionTitle}>How it works</Text>
+      <Text style={styles.sectionTitle}>{t('rewards.howItWorks')}</Text>
       {STEPS.map((step, i) => (
         <View key={step.title} style={styles.step}>
           <View style={styles.stepNumber}>
             <Text style={styles.stepNumberText}>{i + 1}</Text>
           </View>
           <View style={styles.stepBody}>
-            <Text style={styles.stepTitle}>{step.title}</Text>
-            <Text style={styles.stepText}>{step.text}</Text>
+            <Text style={styles.stepTitle}>{t(step.title, VALUES)}</Text>
+            <Text style={styles.stepText}>{t(step.text, VALUES)}</Text>
           </View>
         </View>
       ))}
 
       <Pressable style={styles.secondaryButton} onPress={() => router.push('/capture')}>
-        <Text style={styles.secondaryText}>Take photos</Text>
+        <Text style={styles.secondaryText}>{t('common.takePhotos')}</Text>
       </Pressable>
     </ScrollView>
   );

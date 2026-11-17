@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet, ActivityIndicator } from 'react-nati
 import * as Linking from 'expo-linking';
 import { router } from 'expo-router';
 import { supabase } from '../lib/supabase';
+import { t } from '../i18n';
 
 // The confirmation email link opens this screen.
 // Supabase adds the login info to the end of the link, after a "#":
@@ -31,7 +32,7 @@ export default function EmailConfirmedScreen() {
     const access_token = params.get('access_token');
     const refresh_token = params.get('refresh_token');
     if (!access_token || !refresh_token) {
-      setErrorMessage('This link is missing confirmation info.');
+      setErrorMessage(t('emailConfirmed.missingInfo'));
       setStatus('error');
       return;
     }
@@ -51,7 +52,7 @@ export default function EmailConfirmedScreen() {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" />
-        <Text style={styles.body}>Confirming your email…</Text>
+        <Text style={styles.body}>{t('emailConfirmed.confirming')}</Text>
       </View>
     );
   }
@@ -60,10 +61,10 @@ export default function EmailConfirmedScreen() {
     return (
       <View style={styles.container}>
         <Text style={styles.emoji}>⚠️</Text>
-        <Text style={styles.title}>Couldn't confirm your email</Text>
+        <Text style={styles.title}>{t('emailConfirmed.errorTitle')}</Text>
         <Text style={styles.body}>{errorMessage}</Text>
         <Pressable style={styles.button} onPress={() => router.replace('/sign-in')}>
-          <Text style={styles.buttonText}>Back to sign in</Text>
+          <Text style={styles.buttonText}>{t('emailConfirmed.backToSignIn')}</Text>
         </Pressable>
       </View>
     );
@@ -72,10 +73,10 @@ export default function EmailConfirmedScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.emoji}>✅</Text>
-      <Text style={styles.title}>Email confirmed!</Text>
-      <Text style={styles.body}>Your account is ready and you're signed in.</Text>
+      <Text style={styles.title}>{t('emailConfirmed.successTitle')}</Text>
+      <Text style={styles.body}>{t('emailConfirmed.successBody')}</Text>
       <Pressable style={styles.button} onPress={() => router.replace('/')}>
-        <Text style={styles.buttonText}>Get started</Text>
+        <Text style={styles.buttonText}>{t('emailConfirmed.getStarted')}</Text>
       </Pressable>
     </View>
   );

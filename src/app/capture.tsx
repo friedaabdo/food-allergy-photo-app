@@ -3,9 +3,12 @@ import { View, Text, Pressable, StyleSheet, Alert, ActivityIndicator } from 'rea
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router } from 'expo-router';
 import { supabase } from '../lib/supabase';
+import { t } from '../i18n';
 
-const STEPS = ['Front', 'Back', 'Side 1', 'Side 2'];
-type Photo = { label: string; uri: string };
+// Each side's ID. It's used for the file name (front.jpg) and, with "common.",
+// as the translation key for the name people see. IDs are never translated.
+const STEPS = ['front', 'back', 'side1', 'side2'];
+type Photo = { side: string; uri: string };
 
 export default function CaptureScreen() {
   const cameraRef = useRef<CameraView>(null);
@@ -30,14 +33,14 @@ export default function CaptureScreen() {
       const pic = await cameraRef.current.takePictureAsync({ quality: 1 });
       if (!pic) return;
 
-      const label = STEPS[stepIndex];
-      const newPhotos = [...photos, { label, uri: pic.uri }];
+      const side = STEPS[stepIndex];
+      const newPhotos = [...photos, { side, uri: pic.uri }];
       setPhotos(newPhotos);
 
-      if (label === 'Back') {
-        Alert.alert('Sides', 'Is there important information on the sides?', [
-          { text: 'No', onPress: () => uploadPhotos(newPhotos) },
-          { text: 'Yes', onPress: () => setStepIndex(stepIndex + 1) },
+      if (side === 'back') {
+        Alert.alert(t('capture.sidesTitle'), t('capture.sidesQuestion'), [
+          { text: t('capture.skip'), onPress: () => uploadPhotos(newPhotos) },
+          { text: t('capture.takeSides'), onPress: () => setStepIndex(stepIndex + 1) },
         ]);
       } else if (stepIndex === STEPS.length - 1) {
         uploadPhotos(newPhotos);
@@ -45,7 +48,7 @@ export default function CaptureScreen() {
         setStepIndex(stepIndex + 1);
       }
     } catch (err: any) {
-      Alert.alert('Could not take photo', err.message ?? 'Something went wrong.');
+      Alert.alert(t('capture.photoFailed'), err.message ?? t('common.somethingWrong'));
     } finally {
       setBusy(false);
     }
@@ -56,12 +59,12 @@ export default function CaptureScreen() {
     try {
       // Each user gets their own folder, with one subfolder per set of photos
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('You need to be signed in to upload.');
+      if (!user) throw new Error(t('capture.signInToUpload'));
       const folder = `${user.id}/${Date.now()}`;
 
       for (const photo of list) {
         const ext = photo.uri.split('.').pop()?.toLowerCase() || 'jpg';
-        const name = photo.label.toLowerCase().replace(/\s+/g, ''); // "Side 1" → "side1"
+        const name = photo.side; // "side1" -> side1.jpg
         const fileData = await fetch(photo.uri).then((res) => res.arrayBuffer());
 
         const { error } = await supabase.storage
@@ -73,10 +76,10 @@ export default function CaptureScreen() {
         if (error) throw error;
       }
 
-      Alert.alert('Uploaded! ✅', `${list.length} photos saved.`);
+      Alert.alert(t('capture.uploadedTitle'), t('capture.uploadedBody', { count: list.length }));
       close();
     } catch (err: any) {
-      Alert.alert('Upload failed', err.message ?? 'Something went wrong.');
+      Alert.alert(t('capture.uploadFailed'), err.message ?? t('common.somethingWrong'));
     } finally {
       setUploading(false);
     }
@@ -87,12 +90,12 @@ export default function CaptureScreen() {
   if (!permission.granted) {
     return (
       <View style={[styles.container, styles.center]}>
-        <Text style={styles.permissionText}>We need your permission to use the camera.</Text>
+        <Text style={styles.permissionText}>{t('capture.permission')}</Text>
         <Pressable style={styles.permissionButton} onPress={requestPermission}>
-          <Text style={styles.permissionButtonText}>Allow Camera</Text>
+          <Text style={styles.permissionButtonText}>{t('capture.allowCamera')}</Text>
         </Pressable>
         <Pressable onPress={close}>
-          <Text style={styles.cancelText}>Cancel</Text>
+          <Text style={styles.cancelText}>{t('common.cancel')}</Text>
         </Pressable>
       </View>
     );
@@ -106,9 +109,10 @@ export default function CaptureScreen() {
         <Pressable onPress={close} hitSlop={20} style={styles.closeButton}>
           <Text style={styles.closeText}>✕</Text>
         </Pressable>
-        <Text style={styles.instructionSmall}>Take a photo of the</Text>
-        <Text style={styles.instructionBig}>{STEPS[stepIndex].toUpperCase()}</Text>
-        <Text style={styles.instructionSmall}>of the package</Text>
+        {/* Some languages put words before AND after the side name, some only before */}
+        {!!t('capture.before') && <Text style={styles.instructionSmall}>{t('capture.before')}</Text>}
+        <Text style={styles.instructionBig}>{t(`common.${STEPS[stepIndex]}`).toUpperCase()}</Text>
+        {!!t('capture.after') && <Text style={styles.instructionSmall}>{t('capture.after')}</Text>}
       </View>
 
       <View style={styles.bottomBar}>
@@ -120,7 +124,7 @@ export default function CaptureScreen() {
       {uploading && (
         <View style={[StyleSheet.absoluteFill, styles.center, styles.overlay]}>
           <ActivityIndicator size="large" color="#fff" />
-          <Text style={styles.uploadingText}>Uploading photos...</Text>
+          <Text style={styles.uploadingText}>{t('capture.uploading')}</Text>
         </View>
       )}
     </View>

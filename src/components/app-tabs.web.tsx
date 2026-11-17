@@ -10,6 +10,7 @@ import { SymbolView } from 'expo-symbols';
 import { Pressable, useColorScheme, View, StyleSheet } from 'react-native';
 
 import { Colors, MaxContentWidth, Spacing } from '@/constants/theme';
+import { t } from '@/i18n';
 
 import { ExternalLink } from './external-link';
 import { ThemedText } from './themed-text';
@@ -22,16 +23,16 @@ export default function AppTabs() {
       <TabList asChild>
         <CustomTabList>
           <TabTrigger name="home" href="/" asChild>
-            <TabButton>Home</TabButton>
+            <TabButton>{t('tabs.home')}</TabButton>
           </TabTrigger>
           <TabTrigger name="photos" href="/photos" asChild>
-            <TabButton>My Photos</TabButton>
+            <TabButton>{t('tabs.photos')}</TabButton>
           </TabTrigger>
           <TabTrigger name="rewards" href="/rewards" asChild>
-            <TabButton>My Rewards</TabButton>
+            <TabButton>{t('tabs.rewards')}</TabButton>
           </TabTrigger>
           <TabTrigger name="explore" href="/explore" asChild>
-            <TabButton>Explore</TabButton>
+            <TabButton>{t('tabs.explore')}</TabButton>
           </TabTrigger>
         </CustomTabList>
       </TabList>

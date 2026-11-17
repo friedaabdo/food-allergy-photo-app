@@ -1,11 +1,99 @@
 {
+  "common": {
+    "front": "Front",
+    "back": "Back",
+    "side1": "Side 1",
+    "side2": "Side 2",
+    "takePhotos": "Take photos",
+    "cancel": "Cancel",
+    "somethingWrong": "Something went wrong."
+  },
+  "tabs": {
+    "home": "Home",
+    "photos": "My Items",
+    "rewards": "My Rewards",
+    "explore": "Explore"
+  },
   "home": {
-    "title": "Home"
+    "title": "Home",
+    "heading": "Scan a food package",
+    "body": "Take four photos of the package so its label and ingredients are saved to your items. Each package earns %{coins} coins.",
+    "seeItems": "See my items",
+    "signedInAs": "Signed in as %{email}",
+    "signOut": "Sign out"
   },
   "photos": {
-    "title": "My Items"
+    "title": "My Items",
+    "loadError": "Could not load photos.",
+    "empty": "No photos yet. Take some photos of a food package to get started."
   },
   "rewards": {
-    "title": "My Rewards"
+    "title": "My Rewards",
+    "giftCard": "%{amount} gift card",
+    "coinsOf": "/ %{goal} coins",
+    "enough": "You have enough coins for a %{amount} gift card.",
+    "itemsLeft": {
+      "one": "%{count} more item to go.",
+      "other": "%{count} more items to go."
+    },
+    "claim": "Claim %{amount} gift card",
+    "claimAt": "Claim at %{goal} coins",
+    "howItWorks": "How it works",
+    "step1Title": "Photograph a food package",
+    "step1Text": "Take the front, back and both sides so the label is saved.",
+    "step2Title": "Earn %{coins} coins",
+    "step2Text": "Every item you photograph adds %{coins} coins to your total.",
+    "step3Title": "Reach %{goal} coins",
+    "step3Text": "That's %{items} items. Then you can claim a %{amount} gift card.",
+    "confirmTitle": "Claim a %{amount} gift card?",
+    "confirmBody": "%{goal} coins will be taken from your balance.",
+    "confirmButton": "Claim",
+    "failedTitle": "Gift card not claimed",
+    "claimedTitle": "Gift card claimed",
+    "claimedBody": "%{goal} coins were taken from your balance."
+  },
+  "capture": {
+    "before": "Take a photo of the",
+    "after": "of the package",
+    "sidesTitle": "Photograph the sides?",
+    "sidesQuestion": "Do the sides show ingredients, allergens or other important information?",
+    "skip": "Skip",
+    "takeSides": "Take side photos",
+    "photoFailed": "Could not take photo",
+    "signInToUpload": "You need to be signed in to upload.",
+    "uploadedTitle": "Uploaded! ✅",
+    "uploadedBody": {
+      "one": "%{count} photo saved.",
+      "other": "%{count} photos saved."
+    },
+    "uploadFailed": "Upload failed",
+    "uploading": "Uploading photos...",
+    "permission": "We need your permission to use the camera.",
+    "allowCamera": "Allow Camera"
+  },
+  "signIn": {
+    "createAccount": "Create account",
+    "welcomeBack": "Welcome back",
+    "email": "Email",
+    "password": "Password",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "haveAccount": "Already have an account? Sign in",
+    "noAccount": "Don't have an account? Sign up",
+    "missingTitle": "Missing info",
+    "missingBody": "Please enter your email and password.",
+    "signUpFailed": "Sign up failed",
+    "checkEmailTitle": "Check your email",
+    "checkEmailBody": "Tap the link we sent you, then sign in.",
+    "signInFailed": "Sign in failed"
+  },
+  "emailConfirmed": {
+    "confirming": "Confirming your email…",
+    "errorTitle": "Couldn't confirm your email",
+    "missingInfo": "This link is missing confirmation info.",
+    "backToSignIn": "Back to sign in",
+    "successTitle": "Email confirmed!",
+    "successBody": "Your account is ready and you're signed in.",
+    "getStarted": "Get started"
   }
 }

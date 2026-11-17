@@ -7,7 +7,7 @@ import { CoinBalance, COINS_PER_SET } from '../../components/coin-balance';
 import {t} from '../../i18n';
 
 // The four photos the capture screen asks for, in order
-const SIDES = ['Front', 'Back', 'Side 1', 'Side 2'];
+const SIDES = ['common.front', 'common.back', 'common.side1', 'common.side2'];
 
 export default function HomeScreen() {
   const { session } = useAuth();
@@ -24,10 +24,9 @@ export default function HomeScreen() {
         <CoinBalance />
       </View>
 
-      <Text style={styles.title}>Scan a food package</Text>
+      <Text style={styles.title}>{t('home.heading')}</Text>
       <Text style={styles.body}>
-        Take four photos of the package so its label and ingredients are saved to your items.
-        Each package earns {COINS_PER_SET} coins.
+                {t('home.body', { coins: COINS_PER_SET })}
       </Text>
 
       {/* A picture of the four photos you'll take */}
@@ -35,7 +34,7 @@ export default function HomeScreen() {
         {SIDES.map((side, i) => (
           <View key={side} style={styles.sideTile}>
             <Text style={styles.sideNumber}>{i + 1}</Text>
-            <Text style={styles.sideLabel}>{side}</Text>
+            <Text style={styles.sideLabel}>{t(side)}</Text>
           </View>
         ))}
       </View>
@@ -44,17 +43,17 @@ export default function HomeScreen() {
         style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
         onPress={() => router.push('/capture')}
       >
-        <Text style={styles.buttonText}>Take photos</Text>
+        <Text style={styles.buttonText}>{t('common.takePhotos')}</Text>
       </Pressable>
 
       <Pressable style={styles.secondaryButton} onPress={() => router.push('/photos')}>
-        <Text style={styles.secondaryText}>See my items</Text>
+        <Text style={styles.secondaryText}>{t('home.seeItems')}</Text>
       </Pressable>
 
       <View style={styles.account}>
-        <Text style={styles.signedIn}>Signed in as {session?.user.email}</Text>
+        <Text style={styles.signedIn}>{t('home.signedInAs', { email: session?.user.email })}</Text>
         <Pressable onPress={() => supabase.auth.signOut()} hitSlop={10}>
-          <Text style={styles.link}>Sign out</Text>
+          <Text style={styles.link}>{t('home.signOut')}</Text>
         </Pressable>
       </View>
     </ScrollView>

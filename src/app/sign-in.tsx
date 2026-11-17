@@ -6,6 +6,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import * as Linking from 'expo-linking';
 import { supabase } from '../lib/supabase';
+import { t } from '../i18n';
 
 export default function SignInScreen() {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ export default function SignInScreen() {
 
   async function handleSubmit() {
     if (!email || !password) {
-      Alert.alert('Missing info', 'Please enter your email and password.');
+      Alert.alert(t('signIn.missingTitle'), t('signIn.missingBody'));
       return;
     }
 
@@ -36,15 +37,15 @@ export default function SignInScreen() {
         },
       });
       if (error) {
-        Alert.alert('Sign up failed', error.message);
+        Alert.alert(t('signIn.signUpFailed'), error.message);
       } else if (!data.session) {
         // Happens when "Confirm email" is turned on in Supabase
-        Alert.alert('Check your email', 'Tap the link we sent you, then sign in.');
+        Alert.alert(t('signIn.checkEmailTitle'), t('signIn.checkEmailBody'));
         setIsSignUp(false);
       }
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) Alert.alert('Sign in failed', error.message);
+      if (error) Alert.alert(t('signIn.signInFailed'), error.message);
     }
 
     // On success the app switches to the home screen by itself
@@ -55,11 +56,11 @@ export default function SignInScreen() {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <Text style={styles.title}>{isSignUp ? 'Create account' : 'Welcome back'}</Text>
+      <Text style={styles.title}>{isSignUp ? t('signIn.createAccount') : t('signIn.welcomeBack')}</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder={t('signIn.email')}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -69,7 +70,7 @@ export default function SignInScreen() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder={t('signIn.password')}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -81,13 +82,13 @@ export default function SignInScreen() {
         <ActivityIndicator size="large" style={{ marginTop: 12 }} />
       ) : (
         <Pressable style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>{isSignUp ? 'Sign up' : 'Sign in'}</Text>
+          <Text style={styles.buttonText}>{isSignUp ? t('signIn.signUp') : t('signIn.signIn')}</Text>
         </Pressable>
       )}
 
       <Pressable onPress={() => setIsSignUp(!isSignUp)} disabled={loading}>
         <Text style={styles.link}>
-          {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+          {isSignUp ? t('signIn.haveAccount') : t('signIn.noAccount')}
         </Text>
       </Pressable>
     </KeyboardAvoidingView>

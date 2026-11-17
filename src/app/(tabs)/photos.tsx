@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../lib/auth';
 import { CoinBalance } from '../../components/coin-balance';
+import { t } from '../../i18n';
 
 // Photos are stored like: photos/<user-id>/<timestamp>/front.jpg
 // Each <timestamp> folder is one "set" (one food package).
@@ -16,7 +17,7 @@ type Photo = { label: string; path: string; url: string };
 type PhotoSet = { id: string; date: Date; photos: Photo[] };
 
 const ORDER = ['front', 'back', 'side1', 'side2'];
-const LABELS: Record<string, string> = { front: 'Front', back: 'Back', side1: 'Side 1', side2: 'Side 2' };
+const LABELS: Record<string, string> = { front: 'common.front', back: 'common.back', side1: 'common.side1', side2: 'common.side2' };
 
 export default function PhotosScreen() {
   const { session } = useAuth();
@@ -84,7 +85,8 @@ export default function PhotosScreen() {
 
       setSets(result);
     } catch (err: any) {
-      setError(err.message ?? 'Could not load photos.');
+      console.warn(err); // the technical details, for you in the Expo terminal
+      setError(t('photos.loadError'));
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -117,7 +119,7 @@ export default function PhotosScreen() {
         }
         ListHeaderComponent={
           <View style={styles.headerRow}>
-            <Text style={styles.heading}>My Items</Text>
+            <Text style={styles.heading}>{t('photos.title')}</Text>
             <CoinBalance />
           </View>
         }
@@ -127,9 +129,9 @@ export default function PhotosScreen() {
               <Text style={styles.errorText}>{error}</Text>
             ) : (
               <>
-                <Text style={styles.emptyText}>No photos yet.</Text>
+                <Text style={styles.emptyText}>{t('photos.empty')}</Text>
                 <Pressable style={styles.button} onPress={() => router.push('/capture')}>
-                  <Text style={styles.buttonText}>Take Photos</Text>
+                  <Text style={styles.buttonText}>{t('common.takePhotos')}</Text>
                 </Pressable>
               </>
             )}
@@ -147,7 +149,7 @@ export default function PhotosScreen() {
                 <Pressable key={photo.path} onPress={() => setViewing(photo)} style={styles.thumbWrap}>
                   {/* cacheKey keeps the image cached even though the link changes each load */}
                   <Image source={{ uri: photo.url, cacheKey: photo.path }} style={styles.thumb} contentFit="cover" />
-                  <Text style={styles.thumbLabel}>{photo.label}</Text>
+                  <Text style={styles.thumbLabel}>{t(photo.label)}</Text>
                 </Pressable>
               ))}
             </View>
@@ -168,7 +170,7 @@ export default function PhotosScreen() {
           <Pressable onPress={() => setViewing(null)} hitSlop={20} style={[styles.closeButton, { top: insets.top + 12 }]}>
             <Text style={styles.closeText}>✕</Text>
           </Pressable>
-          {viewing && <Text style={[styles.viewerLabel, { bottom: insets.bottom + 24 }]}>{viewing.label}</Text>}
+          {viewing && <Text style={[styles.viewerLabel, { bottom: insets.bottom + 24 }]}>{t(viewing.label)}</Text>}
         </View>
       </Modal>
     </View>

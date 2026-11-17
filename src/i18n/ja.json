@@ -1,5 +1,99 @@
 {
-  "home": { "title": "ホーム" },
-  "photos": { "title": "マイアイテム" },
-  "rewards": { "title": "マイリワード" }
+  "common": {
+    "front": "正面",
+    "back": "裏面",
+    "side1": "側面1",
+    "side2": "側面2",
+    "takePhotos": "写真を撮る",
+    "cancel": "キャンセル",
+    "somethingWrong": "問題が発生しました。"
+  },
+  "tabs": {
+    "home": "ホーム",
+    "photos": "マイアイテム",
+    "rewards": "マイリワード",
+    "explore": "探す"
+  },
+  "home": {
+    "title": "ホーム",
+    "heading": "食品パッケージをスキャン",
+    "body": "パッケージの写真を4枚撮ると、ラベルと原材料がマイアイテムに保存されます。1つのパッケージにつき%{coins}コインがもらえます。",
+    "seeItems": "マイアイテムを見る",
+    "signedInAs": "%{email} でサインイン中",
+    "signOut": "サインアウト"
+  },
+  "photos": {
+    "title": "マイアイテム",
+    "loadError": "写真を読み込めませんでした。",
+    "empty": "まだ写真がありません。食品パッケージの写真を撮って始めましょう。"
+  },
+  "rewards": {
+    "title": "マイリワード",
+    "giftCard": "%{amount}のギフトカード",
+    "coinsOf": "/ %{goal}コイン",
+    "enough": "%{amount}のギフトカードと交換できるコインが貯まりました。",
+    "itemsLeft": {
+      "one": "あと%{count}アイテム",
+      "other": "あと%{count}アイテム"
+    },
+    "claim": "%{amount}のギフトカードと交換",
+    "claimAt": "%{goal}コインで交換できます",
+    "howItWorks": "しくみ",
+    "step1Title": "食品パッケージを撮影",
+    "step1Text": "ラベルが保存されるよう、正面・裏面・両側面を撮影します。",
+    "step2Title": "%{coins}コイン獲得",
+    "step2Text": "アイテムを1つ撮影するたびに%{coins}コインが加算されます。",
+    "step3Title": "%{goal}コインを貯める",
+    "step3Text": "%{items}アイテム分です。貯まったら%{amount}のギフトカードと交換できます。",
+    "confirmTitle": "%{amount}のギフトカードと交換しますか？",
+    "confirmBody": "残高から%{goal}コインが差し引かれます。",
+    "confirmButton": "交換する",
+    "failedTitle": "ギフトカードを交換できませんでした",
+    "claimedTitle": "ギフトカードを交換しました",
+    "claimedBody": "残高から%{goal}コインが差し引かれました。"
+  },
+  "capture": {
+    "before": "パッケージの",
+    "after": "を撮影してください",
+    "sidesTitle": "側面も撮影しますか？",
+    "sidesQuestion": "側面に原材料、アレルゲン、その他の重要な情報は記載されていますか？",
+    "skip": "スキップ",
+    "takeSides": "側面を撮影する",
+    "photoFailed": "写真を撮れませんでした",
+    "signInToUpload": "アップロードするにはサインインしてください。",
+    "uploadedTitle": "アップロード完了 ✅",
+    "uploadedBody": {
+      "one": "写真を%{count}枚保存しました。",
+      "other": "写真を%{count}枚保存しました。"
+    },
+    "uploadFailed": "アップロードに失敗しました",
+    "uploading": "写真をアップロード中...",
+    "permission": "カメラを使用するには許可が必要です。",
+    "allowCamera": "カメラを許可"
+  },
+  "signIn": {
+    "createAccount": "アカウント作成",
+    "welcomeBack": "おかえりなさい",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "signUp": "登録",
+    "signIn": "サインイン",
+    "haveAccount": "アカウントをお持ちの方はサインイン",
+    "noAccount": "アカウントをお持ちでない方は登録",
+    "missingTitle": "入力が不足しています",
+    "missingBody": "メールアドレスとパスワードを入力してください。",
+    "signUpFailed": "登録できませんでした",
+    "checkEmailTitle": "メールを確認してください",
+    "checkEmailBody": "送信したリンクをタップしてから、サインインしてください。",
+    "signInFailed": "サインインできませんでした"
+  },
+  "emailConfirmed": {
+    "confirming": "メールアドレスを確認中…",
+    "errorTitle": "メールアドレスを確認できませんでした",
+    "missingInfo": "このリンクには確認情報が含まれていません。",
+    "backToSignIn": "サインインに戻る",
+    "successTitle": "メールアドレスを確認しました！",
+    "successBody": "アカウントの準備ができ、サインインしました。",
+    "getStarted": "はじめる"
+  }
 }

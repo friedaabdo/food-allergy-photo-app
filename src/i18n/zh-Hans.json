@@ -1,5 +1,99 @@
 {
-  "home": { "title": "首页" },
-  "photos": { "title": "我的物品" },
-  "rewards": { "title": "我的奖励" }
+  "common": {
+    "front": "正面",
+    "back": "背面",
+    "side1": "侧面 1",
+    "side2": "侧面 2",
+    "takePhotos": "拍照",
+    "cancel": "取消",
+    "somethingWrong": "出了点问题。"
+  },
+  "tabs": {
+    "home": "首页",
+    "photos": "我的物品",
+    "rewards": "我的奖励",
+    "explore": "探索"
+  },
+  "home": {
+    "title": "首页",
+    "heading": "扫描食品包装",
+    "body": "为包装拍摄四张照片，标签和配料表就会保存到你的物品中。每个包装可获得 %{coins} 枚金币。",
+    "seeItems": "查看我的物品",
+    "signedInAs": "已登录：%{email}",
+    "signOut": "退出登录"
+  },
+  "photos": {
+    "title": "我的物品",
+    "loadError": "无法加载照片。",
+    "empty": "还没有照片。拍几张食品包装的照片开始吧。"
+  },
+  "rewards": {
+    "title": "我的奖励",
+    "giftCard": "%{amount} 礼品卡",
+    "coinsOf": "/ %{goal} 枚金币",
+    "enough": "你的金币已足够兑换 %{amount} 礼品卡。",
+    "itemsLeft": {
+      "one": "还差 %{count} 件物品",
+      "other": "还差 %{count} 件物品"
+    },
+    "claim": "兑换 %{amount} 礼品卡",
+    "claimAt": "满 %{goal} 枚金币可兑换",
+    "howItWorks": "如何获得",
+    "step1Title": "拍摄食品包装",
+    "step1Text": "拍摄正面、背面和两个侧面，保存标签信息。",
+    "step2Title": "获得 %{coins} 枚金币",
+    "step2Text": "每拍摄一件物品，你的总数就增加 %{coins} 枚金币。",
+    "step3Title": "集满 %{goal} 枚金币",
+    "step3Text": "也就是 %{items} 件物品。之后即可兑换 %{amount} 礼品卡。",
+    "confirmTitle": "兑换 %{amount} 礼品卡？",
+    "confirmBody": "将从你的余额中扣除 %{goal} 枚金币。",
+    "confirmButton": "兑换",
+    "failedTitle": "礼品卡兑换失败",
+    "claimedTitle": "礼品卡已兑换",
+    "claimedBody": "已从你的余额中扣除 %{goal} 枚金币。"
+  },
+  "capture": {
+    "before": "请拍摄包装的",
+    "after": "",
+    "sidesTitle": "要拍摄侧面吗？",
+    "sidesQuestion": "侧面是否有配料、过敏原或其他重要信息？",
+    "skip": "跳过",
+    "takeSides": "拍摄侧面",
+    "photoFailed": "无法拍照",
+    "signInToUpload": "请先登录再上传。",
+    "uploadedTitle": "上传成功 ✅",
+    "uploadedBody": {
+      "one": "已保存 %{count} 张照片。",
+      "other": "已保存 %{count} 张照片。"
+    },
+    "uploadFailed": "上传失败",
+    "uploading": "正在上传照片...",
+    "permission": "需要你的许可才能使用相机。",
+    "allowCamera": "允许使用相机"
+  },
+  "signIn": {
+    "createAccount": "创建账户",
+    "welcomeBack": "欢迎回来",
+    "email": "邮箱",
+    "password": "密码",
+    "signUp": "注册",
+    "signIn": "登录",
+    "haveAccount": "已有账户？登录",
+    "noAccount": "没有账户？注册",
+    "missingTitle": "信息不完整",
+    "missingBody": "请输入邮箱和密码。",
+    "signUpFailed": "注册失败",
+    "checkEmailTitle": "请查看邮箱",
+    "checkEmailBody": "点击我们发送的链接，然后登录。",
+    "signInFailed": "登录失败"
+  },
+  "emailConfirmed": {
+    "confirming": "正在验证邮箱…",
+    "errorTitle": "无法验证邮箱",
+    "missingInfo": "此链接缺少验证信息。",
+    "backToSignIn": "返回登录",
+    "successTitle": "邮箱已验证！",
+    "successBody": "你的账户已就绪，并已登录。",
+    "getStarted": "开始使用"
+  }
 }

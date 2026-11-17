@@ -33,7 +33,28 @@
           "imageWidth": 76
         }
       ],
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": [
+              "en",
+              "ja",
+              "ko",
+              "zh-Hans",
+              "th"
+            ],
+            "android": [
+              "en",
+              "ja",
+              "ko",
+              "zh-CN",
+              "th"
+            ]
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
